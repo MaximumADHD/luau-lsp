@@ -192,12 +192,6 @@ declare class EnumAnimationClipFromVideoStatus_INTERNAL extends Enum
 	Success: EnumAnimationClipFromVideoStatus
 	Timeout: EnumAnimationClipFromVideoStatus
 end
-declare class EnumAnimationCompositorMode extends EnumItem end
-declare class EnumAnimationCompositorMode_INTERNAL extends Enum
-	Default: EnumAnimationCompositorMode
-	Disabled: EnumAnimationCompositorMode
-	Enabled: EnumAnimationCompositorMode
-end
 declare class EnumAnimationPriority extends EnumItem end
 declare class EnumAnimationPriority_INTERNAL extends Enum
 	Action: EnumAnimationPriority
@@ -1497,13 +1491,6 @@ declare class EnumHumanoidRigType extends EnumItem end
 declare class EnumHumanoidRigType_INTERNAL extends Enum
 	R15: EnumHumanoidRigType
 	R6: EnumHumanoidRigType
-end
-declare class EnumHumanoidStateMachineMode extends EnumItem end
-declare class EnumHumanoidStateMachineMode_INTERNAL extends Enum
-	Default: EnumHumanoidStateMachineMode
-	Legacy: EnumHumanoidStateMachineMode
-	LuaStateMachine: EnumHumanoidStateMachineMode
-	NoStateMachine: EnumHumanoidStateMachineMode
 end
 declare class EnumHumanoidStateType extends EnumItem end
 declare class EnumHumanoidStateType_INTERNAL extends Enum
@@ -3614,7 +3601,6 @@ type ENUM_LIST = {
 	AnalyticsLogLevel: EnumAnalyticsLogLevel_INTERNAL,
 	AnalyticsProgressionStatus: EnumAnalyticsProgressionStatus_INTERNAL,
 	AnimationClipFromVideoStatus: EnumAnimationClipFromVideoStatus_INTERNAL,
-	AnimationCompositorMode: EnumAnimationCompositorMode_INTERNAL,
 	AnimationPriority: EnumAnimationPriority_INTERNAL,
 	AnimatorRetargetingMode: EnumAnimatorRetargetingMode_INTERNAL,
 	AppShellActionType: EnumAppShellActionType_INTERNAL,
@@ -3759,7 +3745,6 @@ type ENUM_LIST = {
 	HumanoidDisplayDistanceType: EnumHumanoidDisplayDistanceType_INTERNAL,
 	HumanoidHealthDisplayType: EnumHumanoidHealthDisplayType_INTERNAL,
 	HumanoidRigType: EnumHumanoidRigType_INTERNAL,
-	HumanoidStateMachineMode: EnumHumanoidStateMachineMode_INTERNAL,
 	HumanoidStateType: EnumHumanoidStateType_INTERNAL,
 	IKCollisionsMode: EnumIKCollisionsMode_INTERNAL,
 	IKControlConstraintSupport: EnumIKControlConstraintSupport_INTERNAL,
@@ -4168,6 +4153,7 @@ declare class Random
 	function NextNumber(self): number
 	function NextNumber(self, min: number, max: number): number
 	function NextUnitVector(self): Vector3
+	function Shuffle(self, table: { any })
 end
 
 declare class Ray
@@ -4264,6 +4250,7 @@ declare class Vector2
 	function Min(self, ...: (Vector2)): Vector2
 	function __add(self, other: Vector2): Vector2
 	function __div(self, other: Vector2 | number): Vector2
+	function __idiv(self, other: Vector2 | number): Vector2
 	function __mul(self, other: Vector2 | number): Vector2
 	function __sub(self, other: Vector2): Vector2
 	function __unm(self): Vector2
@@ -4294,6 +4281,7 @@ declare class Vector3
 	function Min(self, ...: (Vector3)): Vector3
 	function __add(self, other: Vector3): Vector3
 	function __div(self, other: Vector3 | number): Vector3
+	function __idiv(self, other: Vector3 | number): Vector3
 	function __mul(self, other: Vector3 | number): Vector3
 	function __sub(self, other: Vector3): Vector3
 	function __unm(self): Vector3
@@ -5087,6 +5075,7 @@ declare class CaptureService extends Instance
 	CaptureEnded: RBXScriptSignal<>
 	CaptureSaved: RBXScriptSignal<{ [any]: any }>
 	UserCaptureSaved: RBXScriptSignal<Content>
+	function CaptureScreenshot(self, onCaptureReady: ((...any) -> ...any)): nil
 	function PromptSaveCapturesToGallery(self, contentIds: { any }, resultCallback: ((...any) -> ...any)): nil
 	function PromptShareCapture(self, contentId: Content, launchData: string, onAcceptedCallback: ((...any) -> ...any), onDeniedCallback: ((...any) -> ...any)): nil
 end
@@ -5214,6 +5203,7 @@ declare class Collaborator extends Instance
 	CollaboratorColor: number
 	CurDocGUID: string
 	CurScriptLineNumber: number
+	IsIdle: boolean
 	UserId: number
 	Username: string
 end
@@ -8225,7 +8215,7 @@ declare class ControllerPartSensor extends ControllerSensor
 	HitFrame: CFrame
 	HitNormal: Vector3
 	SearchDistance: number
-	SensedPart: BasePart
+	SensedPart: BasePart?
 	SensorMode: EnumSensorMode
 end
 
@@ -8475,7 +8465,6 @@ end
 
 declare class StarterPlayer extends Instance
 	AllowCustomAnimations: boolean
-	AnimationCompositorMode: EnumAnimationCompositorMode
 	AutoJumpEnabled: boolean
 	AvatarJointUpgrade: EnumAvatarJointUpgrade
 	CameraMaxZoomDistance: number
@@ -8495,7 +8484,6 @@ declare class StarterPlayer extends Instance
 	EnableDynamicHeads: EnumLoadDynamicHeads
 	EnableMouseLockOption: boolean
 	HealthDisplayDistance: number
-	HumanoidStateMachineMode: EnumHumanoidStateMachineMode
 	LoadCharacterAppearance: boolean
 	LuaCharacterController: EnumCharacterControlMode
 	NameDisplayDistance: number

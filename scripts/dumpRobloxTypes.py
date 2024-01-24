@@ -253,6 +253,9 @@ IGNORED_MEMBERS = {
     "Vector3": [
         "Angle",
     ],
+    "ControllerPartSensor": [
+        "SensedPart",
+    ],
 }
 
 # Extra members to add in to classes, commonly used to add in metamethods, and add corrections
@@ -264,12 +267,14 @@ EXTRA_MEMBERS = {
         "function __mul(self, other: Vector3 | number): Vector3",
         "function __div(self, other: Vector3 | number): Vector3",
         "function __unm(self): Vector3",
+        "function __idiv(self, other: Vector3 | number): Vector3",
     ],
     "Vector2": [
         "function __add(self, other: Vector2): Vector2",
         "function __sub(self, other: Vector2): Vector2",
         "function __mul(self, other: Vector2 | number): Vector2",
         "function __div(self, other: Vector2 | number): Vector2",
+        "function __idiv(self, other: Vector2 | number): Vector2",
         "function __unm(self): Vector2",
     ],
     "Vector3int16": [
@@ -301,6 +306,9 @@ EXTRA_MEMBERS = {
         "function __sub(self, other: Vector3): CFrame",
         "function __mul(self, other: CFrame): CFrame",
         "function __mul(self, other: Vector3): Vector3",
+    ],
+    "Random": [
+        "function Shuffle(self, table: { any })",
     ],
     "UserSettings": [
         "GameSettings: UserGameSettings",
@@ -509,6 +517,9 @@ EXTRA_MEMBERS = {
     "PathfindingLink": [
         "Attachment0: Attachment?",
         "Attachment1: Attachment?",
+    ],
+    "ControllerPartSensor": [
+        "SensedPart: BasePart?",
     ],
 }
 
